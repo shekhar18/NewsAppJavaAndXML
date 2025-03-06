@@ -1,18 +1,18 @@
-package com.mahadiks.newsappjavaandxml;
+package com.mahadiks.newsappjavaandxml.ui.screens;
+
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.mahadiks.newsappjavaandxml.ui.viewmodels.MainViewModel;
+import com.mahadiks.newsappjavaandxml.R;
 import com.mahadiks.newsappjavaandxml.databinding.ActivityMainBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });*/
-        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         MainViewModel vm = new ViewModelProvider(this).get(MainViewModel.class);
         mainBinding.setVm(vm);
         mainBinding.setLifecycleOwner(this);
