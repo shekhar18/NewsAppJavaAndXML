@@ -1,3 +1,4 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -28,8 +29,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    dataBinding{
-        enabled = true
+    buildFeatures{
+        //noinspection DataBindingWithoutKapt
+        dataBinding true
     }
     kotlinOptions {
         jvmTarget = '11'
@@ -49,4 +51,27 @@ dependencies {
 
     implementation (libs.hilt.android)
     annotationProcessor (libs.hilt.compiler)
+
+    // Views/Fragments integration
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+
+    //room database
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+
+    //retrofit
+    implementation (libs.retrofit)
+    implementation(libs.converter.gson)
+
+    //okHttp and Interceptor
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    //glide
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+
+    //paging lib
+    implementation(libs.paging.runtime)
+
 }

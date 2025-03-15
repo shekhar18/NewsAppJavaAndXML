@@ -1,6 +1,8 @@
-package com.mahadiks.newsappjavaandxml.ui.screens;
+package com.mahadiks.newsappjavaandxml.ui;
 
 
+import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -15,9 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         /*EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -25,9 +30,13 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });*/
-        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        /*ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         MainViewModel vm = new ViewModelProvider(this).get(MainViewModel.class);
         mainBinding.setVm(vm);
-        mainBinding.setLifecycleOwner(this);
+        mainBinding.setLifecycleOwner(this);*/
+
+        ActivityMainBinding mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mainBinding.getRoot());
+
     }
 }

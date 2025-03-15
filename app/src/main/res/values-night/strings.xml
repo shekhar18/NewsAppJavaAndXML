@@ -1,11 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">NewsAppJavaAndXML</string>
     <string name="news_app">News App</string>
     <string name="enter_your_email_id_or_phone_number">Enter Your Email Id or Phone Number</string>
     <string name="enter_password">Enter Password</string>
     <string name="login">Login</string>
     <string name="forgot_password">Forgot Password</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_user">Add New User</string>
 </resources>
