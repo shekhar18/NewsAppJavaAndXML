@@ -74,6 +74,7 @@ public class UserLocalRepository implements NewsRepository {
         FutureTask<Long> createUser = new FutureTask<>(() -> newsDao.insertUser(user));
         try {
            new Thread(createUser).start();
+
            return createUser.get();
         } catch (Exception e) {
             Log.e(TAG, Objects.requireNonNull(e.getMessage()));

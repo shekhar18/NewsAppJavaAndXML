@@ -42,9 +42,6 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void createUser(User user) {
-        userLocalRepository.createUser(user);
-    }
 
 
     private void checkAnyUserIsLogin() {

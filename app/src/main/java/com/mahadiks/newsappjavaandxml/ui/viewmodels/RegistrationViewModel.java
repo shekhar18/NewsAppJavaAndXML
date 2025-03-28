@@ -43,7 +43,10 @@ public class RegistrationViewModel extends ViewModel {
             user.IsActive = true;
             user.userAvatar = "";
 
+
             userIsCreated.setValue(userLocalRepository.createUser(user));
+
+            userLocalRepository.getLoginUser();
         }
     }
 
