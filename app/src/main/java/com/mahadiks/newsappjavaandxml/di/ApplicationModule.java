@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.mahadiks.newsappjavaandxml.data.local.database.NewsDao;
 import com.mahadiks.newsappjavaandxml.data.local.database.NewsDataBase;
+import com.mahadiks.newsappjavaandxml.utils.PreferenceHelper;
 
 import javax.inject.Singleton;
 
@@ -23,6 +24,11 @@ public class ApplicationModule {
         return NewsDataBase.getDataBase(context);
     }
 
+    @Provides
+    @Singleton
+    public static PreferenceHelper providePreferenceHelper(@ApplicationContext Context context) {
+        return new PreferenceHelper(context);
+    }
 
     @Provides
     @Singleton

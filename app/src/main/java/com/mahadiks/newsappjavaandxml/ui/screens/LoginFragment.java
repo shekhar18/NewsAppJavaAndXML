@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -13,14 +12,13 @@ import androidx.navigation.Navigation;
 import com.mahadiks.newsappjavaandxml.R;
 import com.mahadiks.newsappjavaandxml.data.local.database.User;
 import com.mahadiks.newsappjavaandxml.databinding.FragmentLoginBinding;
-import com.mahadiks.newsappjavaandxml.ui.viewmodels.MainViewModel;
+import com.mahadiks.newsappjavaandxml.ui.viewmodels.LoginViewModel;
 
-import javax.inject.Inject;
 
 public class LoginFragment extends Fragment {
 
-    @Inject
-    MainViewModel viewModel;
+
+    LoginViewModel viewModel;
 
     FragmentLoginBinding binding = null;
 
@@ -34,7 +32,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         //getting viewmodel in fragment
-        viewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(LoginViewModel.class);
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.setViewModel(viewModel);
@@ -45,20 +43,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        User user = new User();
-        user.firstName = "shekhar";
-        user.lastName = "mahadik";
-        user.userContactNumber = "7757925001";
-        user.userEmail = "madahiks24@gmail.com";
-        user.userPassword = "123456";
-        user.IsActive = true;
-        user.userAvatar = "fhgdfghdfghdfghdfghdfg";
-        viewModel.createUser(user);
-        //here we checking that users is present in the database
-        //if not found then we show login screen else show user selection list.
-
-        viewModel.checkUserIsPresentOrNot();
-
 
     }
 
@@ -67,11 +51,27 @@ public class LoginFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        viewModel.isUserLogin.observe(this, aBoolean -> {
+        viewModel.userLiveData.observe(this, loginUser -> {
+            if (loginUser.IsActive) {
+                //navigate to mainScreen
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_mainFragment);
+            }
+        });
+
+        //here is i use live data to for navigation
+        /*viewModel.navigateToRegisterScreen.observe(this, s -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_registerFragment);
+        });*/
+
+
+        //here we  using the binding and click listener.
+        binding.textView3.setOnClickListener(view -> {
+            Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_registerFragment);
+        });
+
+        viewModel.navigateToMainScreen.observe(this, aBoolean -> {
             if (aBoolean) {
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.action_loginFragment_to_mainFragment);
-            }else{
-                Toast.makeText(getActivity(), "password or user id is wrong..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

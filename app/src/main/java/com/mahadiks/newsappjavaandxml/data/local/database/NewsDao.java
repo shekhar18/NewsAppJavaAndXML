@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertUser(User user);
+    Long insertUser(User user);
     @Query("SELECT * from users_table ORDER By first_name Asc")
     List<User> getUsers();
 
@@ -21,6 +21,9 @@ public interface NewsDao {
 
     @Query("DELETE FROM users_table WHERE id = :userId AND contact_number = :phoneNumber")
     int getUsers(int userId,String phoneNumber);
+
+    @Query("SELECT * FROM users_table WHERE active == true")
+    User getAnyLoginUse();
 
     @Delete
     int getDeleteAll(User user);

@@ -1,5 +1,8 @@
 package com.mahadiks.newsappjavaandxml.ui.viewmodels;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -34,7 +37,14 @@ public class MainViewModel extends ViewModel {
     }
 
     public void checkUserIsPresentOrNot() {
-        usersIsPresentList.postValue(userLocalRepository.checkUserIsPresent());
+        List<User> userList = userLocalRepository.checkUserIsPresent();
+        usersIsPresentList.postValue(userList);
+
+        userList.forEach(user -> {
+            Log.d("TAG",user.IsActive.toString());
+        });
+
+
     }
 
     public void createUser(User user) {
