@@ -17,6 +17,7 @@ okhttp = "4.12.0"
 pagingRuntime = "3.3.6"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
+rxJava = "3.0.0"
 
 [libraries]
 ##android Hilt
@@ -42,6 +43,10 @@ paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pag
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+rxjava-android = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxJava" }
+rxjava = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxJava" }
+rxjava-retrofit = { group = "com.github.akarnokd", name = "rxjava3-retrofit-adapter",version.ref="rxJava"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

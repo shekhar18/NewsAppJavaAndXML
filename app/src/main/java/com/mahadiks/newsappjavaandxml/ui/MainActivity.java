@@ -9,15 +9,22 @@ import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.mahadiks.newsappjavaandxml.ui.viewmodels.MainViewModel;
 import com.mahadiks.newsappjavaandxml.R;
 import com.mahadiks.newsappjavaandxml.databinding.ActivityMainBinding;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.rxjava3.core.Observable;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
+
+
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -39,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         ActivityMainBinding mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
+
+
+
 
     }
 }

@@ -1,64 +1,66 @@
 package com.mahadiks.newsappjavaandxml.ui.viewmodels;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.navigation.ActionOnlyNavDirections;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.mahadiks.newsappjavaandxml.data.local.database.User;
-import com.mahadiks.newsappjavaandxml.data.local.repo.UserLocalRepository;
+import com.mahadiks.newsappjavaandxml.data.remote.RemoteRepository;
+import com.mahadiks.newsappjavaandxml.data.remote.models.News;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import retrofit2.HttpException;
 
 @HiltViewModel
 public class MainViewModel extends ViewModel {
 
 
-    private final UserLocalRepository userLocalRepository;
-    private final MutableLiveData<List<User>> usersIsPresentList = new MutableLiveData<>();
-    private MutableLiveData<Boolean> _isUserLogin = new MutableLiveData<>();
-    public LiveData<Boolean> isUserLogin = _isUserLogin;
-    public MutableLiveData<String> userId = new MutableLiveData<>();
-    public MutableLiveData<String> password = new MutableLiveData<>();
+     public MutableLiveData<News> newsMutableLiveData = new MutableLiveData<>();
+    private final RemoteRepository remoteRepository;
+    private final MutableLiveData<Boolean> _isUserLogin = new MutableLiveData<>();
+    private final CompositeDisposable disposable = new CompositeDisposable();
+
+
 
 
     @Inject
-    public MainViewModel(UserLocalRepository userLocalRepository) {
-        this.userLocalRepository = userLocalRepository;
+    public MainViewModel(RemoteRepository remoteRepository) {
+        this.remoteRepository = remoteRepository;
+       // getNewsFromServer();
     }
 
-    public void checkUserIsPresentOrNot() {
-        List<User> userList = userLocalRepository.checkUserIsPresent();
-        usersIsPresentList.postValue(userList);
 
-        userList.forEach(user -> {
-            Log.d("TAG",user.IsActive.toString());
+    public void getNewsFromServer() {
+        Disposable d = remoteRepository.getNews().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(news -> {
+            Log.d("TAG", "" + news.totalResults);
+            newsMutableLiveData.setValue(news);
+        },throwable -> {
+            // handle error properly here
+            if (throwable instanceof HttpException) {
+                HttpException httpException = (HttpException) throwable;
+                int code = httpException.code();
+
+                if (code == 426) {
+                    // handle "Upgrade Required"
+                    Log.e("API", "Server requires upgrade or API version change.");
+                } else {
+                    Log.e("API", "HTTP error code: " + code);
+                }
+            } else {
+                Log.e("API", "Unexpected error : "+throwable.getMessage() );
+            }
         });
-
-
+        disposable.add(d);
     }
-
-    public void createUser(User user) {
-        userLocalRepository.createUser(user);
-    }
-
-
-    public void userGetLogin(String mobileNumberOrEmailId,String userPassword){
-
-        _isUserLogin.setValue(userLocalRepository.userGetLogin(mobileNumberOrEmailId,userPassword));
-
-
-    }
-
 
 
 }

@@ -74,4 +74,10 @@ dependencies {
     //paging lib
     implementation(libs.paging.runtime)
 
+    //Rxjava Lib
+    implementation(libs.rxjava.android)
+    implementation(libs.rxjava)
+    implementation(libs.rxjava.retrofit)
+
+
 }
